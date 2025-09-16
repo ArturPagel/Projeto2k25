@@ -1,5 +1,12 @@
-from modelsTeste import *
+from modelsTeste import UsuarioTeste
 from config import *
+
+app = Flask(__name__)
+app.secret_key = "secret"  # Em produção, use uma chave secreta forte e segura
+
+CAMINHO_FOTOS = os.path.join(os.getcwd(), "static", "imagens", "fotosperfil")
+
+# --- ROTAS ---
 
 @app.route("/")
 def home():
@@ -23,15 +30,30 @@ def novo_usuario():
     sobrenome = request.form.get("last_name")
     username = request.form.get("username")
     email = request.form.get("email")
-    foto = "/static/imagens/fotosperfil/default.jpg"
-    senha = request.form.get("password")
-    
+    senha_raw = request.form.get("password")
+    senha = generate_password_hash(senha_raw)
+    foto = "/static/imagens/fotosperfil/default.jpg"  # foto padrão
+
     with db_session:
-        novo_user = UsuarioTeste(nome=nome, sobrenome=sobrenome, username=username, email=email, foto=foto, senha=senha)
+        existente_username = select(u for u in UsuarioTeste if u.username == username).limit(1).first()
+        existente_email = select(u for u in UsuarioTeste if u.email == email).limit(1).first()
+        
+        if existente_username or existente_email:
+            flash("Usuário ou email já cadastrado.", "error")
+            return redirect(url_for("cadastro"))
+
+        UsuarioTeste(
+            nome=nome,
+            sobrenome=sobrenome,
+            username=username,
+            email=email,
+            senha=senha,
+            foto=foto
+        )
         commit()
 
-        return redirect(url_for("login"))
-
+    flash("Cadastro realizado com sucesso! Faça login.", "success")
+    return redirect(url_for("login"))
 
 @app.route("/acesso/login")
 def login():
@@ -44,18 +66,15 @@ def loginUser():
     senha = request.form.get("password")
 
     usuario = select(u for u in UsuarioTeste
-                    if (u.email == login_usuario or u.username == login_usuario)
-                    and u.senha == senha).first()
+                     if u.email == login_usuario or u.username == login_usuario).limit(1).first()
 
-    if usuario:
+    if usuario and check_password_hash(usuario.senha, senha):
         session["nome"] = usuario.nome
         session["sobrenome"] = usuario.sobrenome
         session["username"] = usuario.username
         session["email"] = usuario.email
         session["foto_perfil"] = usuario.foto
-
         return redirect(url_for("home"))
-        
     else:
         return render_template_string("""
             <script>
@@ -73,8 +92,6 @@ def logout():
 def perfil():
     return render_template("perfil.html")
 
-CAMINHO_FOTOS = os.path.join(os.getcwd(), "static", "imagens", "fotosperfil")
-
 @app.route("/perfil/atualizado", methods=["POST"])
 def update_perfil():
     novo_nome = request.form.get("nome")
@@ -86,38 +103,36 @@ def update_perfil():
     with db_session:
         usuario = UsuarioTeste.get(email=session.get("email"))
 
-        if usuario:
-            usuario.nome = novo_nome
-            usuario.sobrenome = novo_sobrenome
-            usuario.username = novo_username
-            usuario.email = novo_email
-
-            # Se uma nova foto foi enviada
-            if nova_foto and nova_foto.filename != '':
-                nome_arquivo = secure_filename(nova_foto.filename)
-                caminho_foto = os.path.join(CAMINHO_FOTOS, nome_arquivo)
-                url_foto = f'/static/imagens/fotosperfil/{nome_arquivo}'
-                nova_foto.save(caminho_foto)
-
-                # Atualiza no banco
-                usuario.foto_perfil = f"/{caminho_foto}"
-
-                # Atualiza na session
-                session["foto_perfil"] = f"/{url_foto}"
-
-            # Atualiza os dados na session
-            session["nome"] = novo_nome
-            session["sobrenome"] = novo_sobrenome
-            session["username"] = novo_username
-            session["email"] = novo_email
-
-            flash("Perfil atualizado com sucesso!", "success")
-            return redirect(url_for("perfil"))  # sua rota de perfil
-
-        else:
+        if not usuario:
             flash("Usuário não encontrado.", "error")
             return redirect(url_for("login"))
+
+        usuario.nome = novo_nome
+        usuario.sobrenome = novo_sobrenome
+        usuario.username = novo_username
+        usuario.email = novo_email
+
+        if nova_foto and nova_foto.filename != '':
+            nome_arquivo = secure_filename(nova_foto.filename)
+            caminho_foto = os.path.join(CAMINHO_FOTOS, nome_arquivo)
+            nova_foto.save(caminho_foto)
+            url_foto = f'/static/imagens/fotosperfil/{nome_arquivo}'
+            usuario.foto = url_foto
+            session["foto_perfil"] = url_foto
+
+        session["nome"] = novo_nome
+        session["sobrenome"] = novo_sobrenome
+        session["username"] = novo_username
+        session["email"] = novo_email
+
+        commit()
+        flash("Perfil atualizado com sucesso!", "success")
+        return redirect(url_for("perfil"))
 
 @app.route("/sobre")
 def sobre():
     return render_template("sobre.html")
+
+# --- Roda o app ---
+if __name__ == "__main__":
+    app.run(debug=True)
