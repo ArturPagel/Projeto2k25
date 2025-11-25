@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}Fé{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/geral.css') }}">
+{% endblock %}
+
+{% block content %}
+<article class="section-container">
+    <h1>Fé — A força invisível do homem cristão</h1>
+
+    <section>
+        <h2>1. Introdução — O Gancho</h2>
+        <p>Vivemos em um tempo onde aparência, dinheiro e status definem o valor das pessoas. Mas o homem que se apoia apenas nisso constrói sobre areia. A fé é o alicerce firme — a rocha que sustenta quando tudo desaba. Ela é o que diferencia o homem guiado por Deus daquele guiado pelo mundo.</p>
+        <p>Jesus disse em Mateus 7:24-25 (NVI): “Quem ouve estas minhas palavras e as pratica é como o homem prudente que construiu a sua casa sobre a rocha.” A fé é essa rocha. Sem ela, corpo e sucesso perdem sentido. Com ela, tudo ganha propósito.</p>
+    </section>
+
+    <section>
+        <h2>2. Contexto — Por que isso importa?</h2>
+        <p>A fé cristã é relacionamento com o Criador. Em um mundo que exalta o ego, a fé ensina dependência e confiança. Hebreus 11:1 (NVI): “A fé é a certeza daquilo que esperamos e a prova das coisas que não vemos.”</p>
+        <p>Homens de fé têm equilíbrio e propósito. Abraão deixou tudo por uma promessa. Davi venceu gigantes com fé, não com armas. Paulo enfrentou prisões com coragem. Estudos da Harvard T.H. Chan School mostram que a espiritualidade reduz ansiedade e aumenta resiliência — algo que a Bíblia já ensina em Isaías 26:3.</p>
+    </section>
+
+    <section>
+        <h2>3. Quebra de Expectativa — O erro comum</h2>
+        <p>Muitos acham que ter fé é esperar. Mas fé sem ação é morta (Tiago 2:17). O homem de fé vive como filho de Deus todos os dias — não apenas aos domingos. Fé não é remendo para crises; é combustível para a vida.</p>
+    </section>
+
+    <section>
+        <h2>4. Solução — O conteúdo principal</h2>
+        <h3>4.1 Como fortalecer sua fé</h3>
+        <ul>
+            {% for topico in topicos %}
+                <li>
+                    <a href="{{ topico.link }}" target="_blank">{{ topico.texto }}</a>
+                
+                    <span class="fav-icon"
+                          data-url="{{ url_for('favoritar', id_topico=topico.id) }}">
+                        {% if topico.id in favoritos_ids %}
+                            ❤️
+                        {% else %}
+                            ♡
+                        {% endif %}
+                    </span>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <h3>4.2 Fé e masculinidade</h3>
+        <p>A fé molda o homem para ser firme e justo. Jesus é o exemplo: liderava com amor, confrontava com sabedoria e servia com humildade. O homem de fé guia com amor e verdade, não com orgulho.</p>
+
+        <h3>4.3 A fé como escudo na mente</h3>
+        <p>Efésios 6:16 chama a fé de escudo. Ela protege contra medo e dúvida. Confiar em Deus muda como o homem reage às batalhas. O mundo ensina a confiar em si; a fé ensina a confiar em Deus — e é aí que o impossível acontece.</p>
+    </section>
+
+    <section>
+        <h2>5. Valorização — A presença do homem de fé</h2>
+        <p>O homem de fé inspira pela calma e firmeza. 1 Samuel 16:7 lembra: “O Senhor não vê como o homem; o homem vê a aparência, mas o Senhor vê o coração.” O verdadeiro brilho do homem está em quem ele é em Cristo, não no que veste.</p>
+    </section>
+
+    <section>
+        <h2>6. Vida de Oração — Onde o guerreiro se ajoelha</h2>
+        <p>Mateus 6:6 (NVI): “Mas tu, quando orares, entra no teu quarto, fecha a porta e ora ao teu Pai, que está em secreto.” A oração não muda Deus — muda quem ora. É onde o homem reencontra força, propósito e paz.</p>
+    </section>
+
+    <section>
+        <h2>7. Disciplina Espiritual — Fé sem constância é emoção passageira</h2>
+        <p>A fé verdadeira se sustenta pela disciplina diária: leitura da Palavra, obediência e prática. Como ensina Augustus Nicodemus, “espiritualidade não é emoção, é constância.”</p>
+        <ul>
+            <li>Ler a Bíblia diariamente</li>
+            <li>Memorizar um versículo por semana</li>
+            <li>Praticar princípios bíblicos como gratidão e perdão</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>8. Liderança Espiritual Masculina — O homem como guia</h2>
+        <p>Efésios 5:25 orienta: “Maridos, amem suas esposas como Cristo amou a igreja.” O homem cristão lidera com amor, coragem e exemplo — sua força está na constância, não na imposição.</p>
+    </section>
+
+    <section>
+        <h2>9. Fé e Propósito — Viver com sentido eterno</h2>
+        <p>Mateus 6:33: “Busquem primeiro o Reino de Deus e a sua justiça.” Fé dá direção. O homem de fé pergunta: “Como posso servir com o que Deus me deu?”</p>
+    </section>
+
+    <section>
+        <h2>10. Fé na prática diária — Espiritualidade fora da igreja</h2>
+        <p>Fé se prova nas atitudes: honestidade, respeito, paciência e gratidão. Como diz Hernandes Dias Lopes: “O evangelho é visível quando a Bíblia se transforma em comportamento.”</p>
+    </section>
+
+    <section>
+        <h2>Conclusão — Um homem firmado na Rocha</h2>
+        <p>“Todo aquele que ouve estas minhas palavras e as pratica é como o homem prudente que construiu a casa sobre a rocha.” (Mateus 7:24)</p>
+        <p>O homem de fé permanece de pé porque tem fundamentos eternos.</p>
+    </section>
+
+    <section>
+        <h2>Conclusão Geral — Chamada à Ação</h2>
+        <p>A fé é a base de toda transformação. Decida hoje firmar sua vida sobre a rocha: leia, ore, confie e viva com propósito.</p>
+        <p>“Seja forte e corajoso! O Senhor, o seu Deus, estará com você por onde você andar.” (Josué 1:9)</p>
+    </section>
+</article>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Cuidados Pessoais{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/geral.css') }}">
+{% endblock %}
+
+{% block content %}
+<article class="section-container">
+    <h1>Cuidados Pessoais Masculinos — A base da estética, da saúde e do alto valor</h1>
+
+    <section>
+        <h2>1. Introdução — O Gancho</h2>
+        <p>De nada adianta roupas caras ou corpo em forma se sua pele está descuidada, o hálito comprometido ou suas mãos transmitem falta de cuidado. Muitos homens ainda associam vaidade a fraqueza, mas a falta de higiene e atenção aos detalhes destrói qualquer estilo. Cuidados pessoais não são luxo: são a fundação da imagem, saúde e respeito social.</p>
+    </section>
+
+    <section>
+        <h2>2. Contexto — Por que isso importa?</h2>
+        <p>A psicologia social mostra que a primeira impressão é formada em até 7 segundos. Pele, cheiro, dentes e cabelo impactam tanto quanto roupa. Estudos em revistas científicas comprovam: homens que cuidam da aparência são vistos como mais confiáveis, organizados e atraentes. Cuidar de si não é vaidade, é inteligência social.</p>
+    </section>
+
+    <section>
+        <h2>3. Quebra de Expectativa — O erro comum</h2>
+        <ul>
+            <li>Achar que banho e desodorante são suficientes.</li>
+            <li>Usar sabonete comum no rosto e reclamar de acne.</li>
+            <li>Barba mal aparada e cabelo sem corte regular.</li>
+            <li>Mau hálito, dentes amarelados e unhas malcuidadas.</li>
+            <li>Perfume em excesso ou ausência total.</li>
+        </ul>
+        <p>Esses detalhes sabotam qualquer tentativa de parecer um homem de valor. Lembre-se: o diabo mora nos detalhes — e eles moldam a percepção social.</p>
+    </section>
+
+    <section>
+        <h2>4. Solução — O Conteúdo Principal</h2>
+        <h3>1. Skincare básico</h3>
+        <ul>
+            {% for topico in topicos %}
+                <li>
+                    <a href="{{ topico.link }}" target="_blank">{{ topico.texto }}</a>
+                
+                    <span class="fav-icon"
+                          data-url="{{ url_for('favoritar', id_topico=topico.id) }}">
+                        {% if topico.id in favoritos_ids %}
+                            ❤️
+                        {% else %}
+                            ♡
+                        {% endif %}
+                    </span>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <h3>2. Barba e cabelo</h3>
+        <ul>
+            <li>Corte de cabelo a cada 15–30 dias.</li>
+            <li>Barba alinhada com óleo, balm ou cera.</li>
+            <li>Procure um barbeiro de confiança e mantenha consistência.</li>
+        </ul>
+
+        <h3>3. Higiene bucal</h3>
+        <ul>
+            <li>Escove os dentes 3x ao dia e use fio dental.</li>
+            <li>Prefira enxaguantes sem álcool.</li>
+            <li>Evite excesso de café e cigarro.</li>
+        </ul>
+
+        <h3>4. Perfume — A arma invisível</h3>
+        <ul>
+            <li>Use 2–3 borrifadas em pontos estratégicos.</li>
+            <li>Perfumes leves para o dia; intensos para a noite.</li>
+            <li>Escolha um perfume assinatura.</li>
+        </ul>
+
+        <h3>5. Mãos, unhas e corpo</h3>
+        <ul>
+            <li>Unhas limpas e cortadas semanalmente.</li>
+            <li>Hidrate mãos e cotovelos.</li>
+            <li>Mantenha pelos corporais aparados.</li>
+        </ul>
+
+        <h3>6. Corpo saudável</h3>
+        <ul>
+            <li>Beba água regularmente.</li>
+            <li>Alimente-se bem e evite fast food.</li>
+            <li>Treine — corpo saudável comunica disciplina.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>5. Valorização — Toque estético e psicológico</h2>
+        <p>Homens que cuidam de si transmitem autoconfiança e poder. A estética não é só aparência — é reflexo da mente e disciplina. Um corte alinhado, barba feita, dentes limpos e perfume discreto impactam mais do que roupas caras. O básico bem-feito já coloca você acima da média.</p>
+    </section>
+
+    <section>
+        <h2>6. Conclusão — Chamada à Ação</h2>
+        <p>Quer ser visto como um homem de valor? Comece pela base: higiene e cuidado pessoal. Monte seu kit de grooming com sabonete facial, protetor solar, hidratante, fio dental e perfume. Torne isso um hábito. Em poucas semanas, sua postura, autoestima e imagem social mudarão radicalmente.</p>
+    </section>
+</article>
+{% endblock %}

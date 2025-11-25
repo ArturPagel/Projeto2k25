@@ -1,0 +1,22 @@
+{% extends "base.html"%}
+{%block title%}Suporte{%endblock%}
+
+{%block head%}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/suporte.css') }}">
+{%endblock%}
+
+{%block content%}
+<section class="formulario">
+        <h2>O que precisa?</h2>
+        <form method="post" action="{{url_for("suporteContato") }}" id="cadastro">
+            <p></p><label for="mensagem">Digite aqui:</label></p>
+            <input id="mensagem" name="mensagem" type="text" />
+            <span id="erro_mensagem" class="erro">Este campo precisa ser preenchido</span>
+
+            <button type="submit">Enviar</button>
+        </form>
+        <script>
+            validacaoFormulario("cadastro");
+        </script>
+</section>
+{%endblock%}

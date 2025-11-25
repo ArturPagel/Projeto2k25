@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fórum</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Seu CSS -->
+    <link rel="stylesheet" href="/static/forum.css" />
+    <link rel="stylesheet" href="/static/forum.css" />
+</head>
+<body>
+    <div class="forum-container">
+        <h1 class="titulo">Fórum / Chat</h1>
+
+        <!-- Caixa de novo post -->
+        <div class="novo-post">
+            <textarea id="novoPost" placeholder="Escreva algo..." maxlength="500"></textarea>
+            <button id="btnPost">Enviar</button>
+        </div>
+
+        <!-- Lista de posts -->
+        <div id="postsContainer" class="posts"></div>
+    </div>
+
+<script>
+    // Carregar posts da API
+    async function carregarPosts() {
+        try {
+            const resposta = await fetch("/api/posts");
+            const data = await resposta.json();
+
+            const container = document.getElementById("postsContainer");
+            container.innerHTML = "";
+
+            data.posts.forEach(post => renderPost(post, container));
+        } catch (e) {
+            console.error("Erro ao carregar posts: ", e);
+        }
+    }
+
+    // Renderizar cada post individualmente
+    function renderPost(post, container) {
+        const div = document.createElement("div");
+        div.classList.add("post");
+
+        div.innerHTML = `
+            <div class="post-content">
+                <span class="post-user">@${post.username}</span>
+                <p>${post.content}</p>
+                <span class="post-time">${post.timestamp}</span>
+            </div>
+
+            <div class="reply-box">
+                <input type="text" class="reply-input" data-id="${post.id}" placeholder="Responder...">
+                <button class="reply-btn" data-id="${post.id}">Responder</button>
+            </div>
+
+            <div class="replies"></div>
+        `;
+
+        const repliesDiv = div.querySelector('.replies');
+
+        post.replies.forEach(rep => {
+            const r = document.createElement("div");
+            r.classList.add("reply");
+            r.innerHTML = `
+                <span class="reply-user">@${rep.username}</span> ${rep.content}
+                <span class="reply-time">${rep.timestamp}</span>
+            `;
+            repliesDiv.appendChild(r);
+        });
+
+        container.appendChild(div);
+    }
+
+    // Enviar novo post
+    async function enviarPost() {
+        const texto = document.getElementById("novoPost").value.trim();
+        if (!texto) return;
+
+        await fetch("/create_post", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ content: texto })
+        });
+
+        document.getElementById("novoPost").value = "";
+        carregarPosts();
+    }
+
+    // Enviar resposta
+    async function enviarResposta(id, conteudo) {
+        if (!conteudo) return;
+
+        await fetch(`/reply_post/${id}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ content: conteudo })
+        });
+
+        carregarPosts();
+    }
+
+    document.getElementById("btnPost").addEventListener("click", enviarPost);
+
+    // Clique no botão de resposta
+    document.addEventListener("click", (e) => {
+        if (e.target.classList.contains("reply-btn")) {
+            const id = e.target.dataset.id;
+            const input = document.querySelector(`.reply-input[data-id='${id}']`);
+            enviarResposta(id, input.value.trim());
+        }
+    });
+
+    // Atualização automática
+    setInterval(carregarPosts, 2500);
+    carregarPosts();
+</script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

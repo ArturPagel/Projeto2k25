@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
     <head>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/mycss.css') }}">
-        <script src="{{ url_for('static', filename='javascript/menuperfil.js') }}"></script>
-
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+        <script src="{{ url_for('static', filename='javascript/base.js') }}"></script>
+        
         <meta charset="UTF-8">
-        <title>{% block title %}Index_base{% endblock %}</title>
+        <title>{% block title %}Man's Trail{% endblock %}</title>
         {% block head %}{% endblock %}
     </head> 
     <body>
         <header>
             <section class="login">
-                <h1><a id="nome_site" href="{{ url_for("home") }}">Index_base</a></h1>
+                <h1><a id="nome_site" href="{{ url_for("home") }}">Man's Trail</a></h1>
                 {% if session.get("nome") %}
                     <div class="usuario-logado">
                         <button style="background: none; border: none; padding: 0;">
@@ -20,30 +20,43 @@
 
                         <div class="menu-opcoes">
                             <a href="{{url_for("perfil") }}">Perfil</a>
-                            <a href="#">Configurações</a>
+                            <a href="{{url_for("favoritos")}}">Favoritos</a>
                             <a href="{{url_for("logout") }}">Sair</a>
                         </div>
                     </div>
                 {% else %}
-                <p><a href="{{ url_for("acesso") }}">Entrar</a></p>
+                <p><a href="{{ url_for("login") }}">Entrar</a></p>
                 {% endif %}
             </section>
             <nav class="nav_basica">
                 <ul>
-                    <li><a href="{{ url_for("auxiliar") }}">Fé</a></li>
-                    <li><a href="{{ url_for("auxiliar") }}">Cuidados</a></li>
-                    <li><a href="{{ url_for("auxiliar") }}" >Esportes</a></li>
-                    <li><a href="{{ url_for("auxiliar") }}">Moda</a></li>
-                    <li><a href="{{ url_for("auxiliar") }}">Automobilismo</a></li>
+                    <li><a href="{{ url_for("fe") }}">Fé</a></li>
+                    <li><a href="{{ url_for("cuidados") }}">Cuidados</a></li>
+                    <li><a href="{{ url_for("esportes") }}" >Esportes</a></li>
+                    <li><a href="{{ url_for("moda") }}">Moda</a></li>
+                    <li><a href="{{ url_for("automobilismo") }}">Automobilismo</a></li>
                     <li><a href="{{ url_for("sobre") }}">Sobre</a></li>
                 </ul>
             </nav>
         </header>
-        <main>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="flash-container">
+                {% for msg in messages %}
+                    <input type="checkbox" id="close-{{ loop.index }}">
+                    <div class="flash-box">
+                        <span>{{ msg }}</span>
+                        <label for="close-{{ loop.index }}" class="flash-close">×</label>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% endwith %}
+                <main>
             {% block content %}{% endblock %}
         </main>
         <footer class="rodape">
-            <p><a href="{{ url_for("auxiliar") }}">Suporte</a></p>
+            <p>Precisa de ajuda? Entre em contato: <a href="{{ url_for("suporte") }}">Suporte</a></p>
             <p>Copyright aleatório</p>
         </footer>
     </body>

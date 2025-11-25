@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Automobilismo{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/geral.css') }}">
+{% endblock %}
+
+{% block content %} 
+    <article class="section-container">
+            <h2>Favoritos</h2>
+            <section>
+                <ul>
+                    {% for favorito in favoritos %}
+                    <li>
+                        <a href="{{ favorito.topico.link }}" target="_blank">{{ favorito.topico.texto }}</a>
+                        <span class="fav-icon">❤️</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+            </article>
+{% endblock %}

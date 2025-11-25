@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Automobilismo{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/geral.css') }}">
+{% endblock %}
+
+{% block content %}
+<article class="section-container">
+    <h1>Automobilismo — Velocidade, técnica e mentalidade de alto desempenho</h1>
+
+    <section>
+        <h2>1. Introdução — O Gancho</h2>
+        <p>A velocidade sempre exerceu fascínio sobre o homem. Mas no automobilismo, ela vai muito além da adrenalina — é disciplina, precisão e autocontrole. A diferença entre um piloto comum e um campeão não está apenas no carro que dirige, mas na mente que o conduz.</p>
+        <p>Assim como na vida, não basta acelerar: é preciso saber quando frear, analisar o traçado e agir com estratégia. O automobilismo ensina mais do que vencer corridas; ele ensina a dominar a si mesmo. Cada curva, cada ultrapassagem e cada segundo no cronômetro refletem a união entre corpo, máquina e foco absoluto.</p>
+    </section>
+
+    <section>
+        <h2>2. Contexto — Por que isso importa?</h2>
+        <p>O automobilismo é uma das modalidades mais completas que existem. Envolve preparo físico, inteligência emocional, leitura de cenário e trabalho em equipe. Estudos em psicologia do esporte apontam que pilotos de elite têm níveis de concentração até 40% superiores à média, além de reflexos e resistência comparáveis aos de atletas olímpicos.</p>
+        <p>No Brasil, nomes como Ayrton Senna, Rubens Barrichello e Felipe Massa mostraram que o automobilismo não é apenas um esporte, mas um símbolo de superação, disciplina e patriotismo. Senna, em especial, transformou o volante em um instrumento de fé e propósito — “Correr, competir, eu levo isso no sangue. É parte da minha vida.”</p>
+        <p>A paixão pelas pistas inspira homens a buscar evolução constante: seja no autódromo, no trabalho ou na vida.</p>
+    </section>
+
+    <section>
+        <h2>3. Quebra de Expectativa — O erro comum</h2>
+        <p>O erro mais comum é pensar que automobilismo é apenas luxo e carros caros. Muitos esquecem que, por trás da glória, há sacrifício, dor física e controle mental extremo.</p>
+        <p>Outro equívoco é achar que dirigir bem é o mesmo que pilotar. Um verdadeiro piloto entende mecânica, aerodinâmica, estratégia e tempo de reação. Na vida, o mesmo se aplica: não basta ter ferramentas, é preciso saber usá-las com inteligência e técnica.</p>
+        <p>A pressa sem propósito é o acidente da alma — e o automobilismo é a prova viva de que velocidade sem controle leva à derrota.</p>
+    </section>
+
+    <section>
+        <h2>4. Solução — O Conteúdo Principal</h2>
+        <h3>1. Técnica e disciplina</h3>
+        <p>Aprender o traçado, respeitar limites, entender o carro e corrigir erros exige humildade e prática constante. Pilotos de alto nível treinam mentalmente voltas inteiras antes mesmo de entrar no carro.</p>
+
+        <h3>2. Preparo físico</h3>
+        <p>O corpo precisa suportar altas forças G, calor extremo e foco sob estresse. Treinos de resistência, reflexo e coordenação são parte da rotina — não luxo.</p>
+
+        <h3>3. Inteligência emocional</h3>
+        <p>Vencer não é apenas ser rápido, mas saber manter a calma quando tudo dá errado. Como dizia Senna: “Se você quer ser bem-sucedido, precisa ter dedicação total, buscar o seu último limite e dar o melhor de si mesmo.”</p>
+
+        <h3>4. Espírito de equipe</h3>
+        <p>Ninguém vence sozinho. Engenheiros, mecânicos e estrategistas fazem parte de cada vitória. Reconhecer isso é maturidade — tanto nas pistas quanto na vida.</p>
+
+        <h3>5. Conhecimento técnico</h3>
+        <p>O bom piloto entende de motores, pneus, combustível e aerodinâmica. O homem moderno que estuda e domina o que faz se torna imbatível — em qualquer área.</p>
+
+        <h3>6. Mentalidade de campeão</h3>
+        <p>Treinar, cair, ajustar e voltar mais forte. Essa é a essência do automobilismo e do crescimento pessoal.</p>
+    </section>
+
+    <section>
+        <h2>5. Valorização — Toque estético e psicológico</h2>
+        <p>O automobilismo não é apenas potência — é estilo, atitude e mentalidade. O visual do piloto (macacão, capacete, postura) transmite confiança, assim como o homem que se posiciona com firmeza no dia a dia.</p>
+        <p>A elegância dos bastidores da Fórmula 1 inspira o conceito do “gentleman driver”: o homem que une força e classe, velocidade e controle. Um olhar focado, uma mente fria e um corpo preparado dizem mais que mil palavras.</p>
+        <p>Como na pista, a vida recompensa quem sabe alinhar paixão e precisão.</p>
+    </section>
+
+    <section>
+        <h2>6. Conclusão — Chamada à Ação</h2>
+        <p>O automobilismo é mais do que esporte — é filosofia de vida. Ele ensina que controle é poder, foco é combustível e constância é vitória.</p>
+        <p>Quer evoluir como homem? Pense como um piloto:</p>
+
+        <ul>
+            {% for topico in topicos %}
+                <li>
+                    <a href="{{ topico.link }}" target="_blank">{{ topico.texto }}</a>
+                
+                    <span class="fav-icon"
+                          data-url="{{ url_for('favoritar', id_topico=topico.id) }}">
+                        {% if topico.id in favoritos_ids %}
+                            ❤️
+                        {% else %}
+                            ♡
+                        {% endif %}
+                    </span>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <p>O verdadeiro sucesso não é cruzar a linha de chegada — é dominar o percurso com coragem, técnica e fé.</p>
+        <p>🏁 Acelere sua evolução. Viva como um piloto.</p>
+    </section>
+
+</article>
+{% endblock %}

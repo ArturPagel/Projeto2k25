@@ -1,31 +1,66 @@
 {% extends "base.html"%}
 
-{% block title%}Cadastro e Login{%endblock%}
+{% block title%}Cadastro{% endblock %}
 
-{% block head%}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/logincss.css') }}">
-{%endblock%}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/logincss.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+{% endblock %}
 
-{%block content%}
-<section class="formulario">
-        <h2>Cadastro</h2>
-        <form method="post" action="{{url_for("novo_usuario") }}">
-            <label for="nome">Nome:</label>
-            <input id="nome" name="first_name" type="text" required />
+{% block content %}
+<main class="auth-container">
+  <section class="formulario">
+    <div class="login-icon">
+      <i class="fas fa-user-plus"></i>
+    </div>
+    <h2>Cadastro</h2>
 
-            <label for="sobrenome">Sobrenome:</label>
-            <input id="sobrenome" name="last_name" type="text" required />
+    <form method="post" action="{{ url_for('novo_usuario') }}" id="cadastro">
+      <label for="nome">Nome:</label>
+      <div class="input-group">
+        <span class="input-icon"><i class="fas fa-user"></i></span>
+        <input id="nome" name="first_name" type="text" placeholder="Seu nome" required/>
+      </div>
+      <span id="erro_nome" class="erro">Este campo precisa ser preenchido</span>
 
-            <label for="username">Nome de usuário:</label>
-            <input id="username" name="username" type="text" required />
+      <label for="sobrenome">Sobrenome:</label>
+      <div class="input-group">
+        <span class="input-icon"><i class="fas fa-user"></i></span>
+        <input id="sobrenome" name="last_name" type="text" placeholder="Seu sobrenome" required/>
+      </div>
+      <span id="erro_sobrenome" class="erro">Este campo precisa ser preenchido</span>
 
-            <label for="email">E-mail:</label>
-            <input id="email" name="email" type="email" required />
+      <label for="username">Nome de usuário:</label>
+      <div class="input-group">
+        <span class="input-icon"><i class="fas fa-user-tag"></i></span>
+        <input id="username" name="username" type="text" placeholder="Crie um usuário" required/>
+      </div>
+      <span id="erro_username" class="erro">Este campo precisa ser preenchido</span>
 
-            <label for="password">Senha:</label>
-            <input id="password" name="password" type="password" pattern=".{8,}" required />
+      <label for="email">E-mail:</label>
+      <div class="input-group">
+        <span class="input-icon"><i class="fas fa-envelope"></i></span>
+        <input id="email" name="email" type="text" placeholder="seu@email.com" required/>
+      </div>
+      <span id="erro_email" class="erro">Você esqueceu do @ ou .com</span>
 
-            <button type="submit">Cadastrar</button>
-        </form>
-</section>
-{%endblock%}
+      <label for="password">Senha:</label>
+      <div class="input-group">
+        <span class="input-icon"><i class="fas fa-lock"></i></span>
+        <input id="password" name="password" type="password" placeholder="Crie uma senha" minlength="8" required/>
+      </div>
+      <span id="erro_senha" class="erro">A senha precisa ter mais que 8 dígitos</span>
+
+      <button type="submit">Cadastrar</button>
+
+      <p class="switch-text">
+        Já tem uma conta? <a href="{{ url_for('login') }}">Entrar</a>
+      </p>
+    </form>
+
+    <script>
+      validacaoCadastro("cadastro")
+    </script>
+  </section>
+</main>
+{% endblock %}

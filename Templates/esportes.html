@@ -1,0 +1,60 @@
+{% extends "base.html"%}
+
+
+{% block title %}Esportes{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/geral.css') }}">
+{% endblock %}
+
+{% block content %}
+<article class="section-container">
+    <h1>Esporte — Corpo forte, mente afiada</h1>
+
+    <section>
+        <h2>1. Introdução — O Gancho</h2>
+        <p>Grandes atletas chamam atenção não apenas pelo talento, mas pela postura, disciplina e energia. O esporte vai além do entretenimento: ele molda corpo, mente e confiança, sendo um dos pilares do crescimento pessoal e social.</p>
+    </section>
+
+    <section>
+        <h2>2. Contexto — Por que isso importa?</h2>
+        <p>Praticar esportes é cuidar da mente e da identidade. Segundo a OMS, 150 minutos semanais de atividade física reduzem o risco de depressão e aumentam a expectativa de vida. No Brasil, o futebol, o basquete e a corrida fortalecem a saúde, o convívio e a autoestima.</p>
+    </section>
+
+    <section>
+        <h2>3. Quebra de Expectativa — O erro comum</h2>
+        <p>Muitos homens veem o esporte apenas como lazer ou performance. Esse erro leva ao sedentarismo e à falta de energia. Jogar, treinar e competir são experiências que constroem corpo, mente e novas conexões.</p>
+    </section>
+
+    <section>
+        <h2>4. Solução — O conteúdo principal</h2>
+        <ul>
+            {% for topico in topicos %}
+                <li>
+                    <a href="{{ topico.link }}" target="_blank">{{ topico.texto }}</a>
+                
+                    <span class="fav-icon"
+                          data-url="{{ url_for('favoritar', id_topico=topico.id) }}">
+                        {% if topico.id in favoritos_ids %}
+                            ❤️
+                        {% else %}
+                            ♡
+                        {% endif %}
+                    </span>
+                </li>
+            {% endfor %}
+        </ul>
+        <p>Além dos benefícios físicos, o esporte reduz o estresse, melhora o foco e fortalece a disciplina e a socialização.</p>
+    </section>
+
+    <section>
+        <h2>5. Valorização — Toque estético e psicológico</h2>
+        <p>O corpo atlético transmite confiança e vitalidade. O estilo esportivo e a postura firme comunicam disciplina e autoestima. Praticar esportes é também cuidar da imagem e desenvolver mentalidade de vitória.</p>
+    </section>
+
+    <section>
+        <h2>6. Conclusão — Chamada à Ação</h2>
+        <p>O esporte é um investimento em si mesmo. Escolha uma modalidade e pratique pelo menos duas vezes por semana. Em pouco tempo, você notará mais energia, confiança e presença em todas as áreas da vida.</p>
+    </section>
+</article>
+{% endblock %}

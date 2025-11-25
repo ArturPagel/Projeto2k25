@@ -1,22 +1,51 @@
 {% extends "base.html"%}
 
-{% block title%}Cadastro e Login{%endblock%}
+{% block title %}Login{% endblock %}
 
-{% block head%}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/logincss.css') }}">
-{%endblock%}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/logincss.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="{{ url_for('static', filename='javascript/base.js') }}"></script>
 
-{%block content%}
-<section class="formulario">
-        <h2>Login</h2>
-        <form method="post" action="{{url_for("loginUser")}}">
-            <label for="login-user">E-mail ou Username:</label>
-            <input id="login-user" name="login_user" type="text" required />
+{% endblock %}
 
-            <label for="login-password">Senha:</label>
-            <input id="login-password" name="password" type="password" required />
+{% block content %}
+<main class="auth-container">
+  <section class="formulario">
+    <div class="login-icon">
+      <i class="fas fa-user"></i>
+    </div>
+    <h2>Login</h2>
 
-            <button type="submit">Entrar</button>
-        </form>
-</section>
-{%endblock%}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="{{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <form method="post" action="{{ url_for('loginUser') }}">
+      <label for="login-user">E-mail ou Username:</label>
+      <div class="input-group">
+        <span class="input-icon"><i class="fas fa-user"></i></span>
+        <input id="login-user" name="login_user" type="text" placeholder="Digite seu e-mail ou usuário" required />
+      </div>
+
+      <label for="login-password">Senha:</label>
+      <div class="input-group">
+        <span class="input-icon"><i class="fas fa-lock"></i></span>
+        <input id="login-password" name="password" type="password" placeholder="Digite sua senha" minlength="8" required />
+      </div>
+        <a href="{{url_for('esqueci_senha')}}" class="forgot-link">Esqueceu a senha?</a>
+      </div>
+
+      <button type="submit">Entrar</button>
+
+      <p class="switch-text">
+        Não tem uma conta? <a href="{{ url_for('cadastro') }}">Cadastre-se</a>
+      </p>
+    </form>
+  </section>
+</main>
+{% endblock %}

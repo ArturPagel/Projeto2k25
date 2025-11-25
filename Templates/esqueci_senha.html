@@ -1,0 +1,35 @@
+{% extends "base.html"%}
+
+{% block title %}Redefinir Senha{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/logincss.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<main class="auth-container">
+  <section class="formulario">
+    
+    <h2>Redefinir Senha:</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="{{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <form method="post" action="{{ url_for('email_redefinicao') }}">
+      <label for="email">Digite seu Email:</label>
+      <div class="input-group">
+        <span class="input-icon"><i class="fas fa-user"></i></span>
+        <input id="email" name="email" type="text" placeholder="Digite seu e-mail" required />
+      </div>
+
+      <button type="submit">Enviar</button>
+    </form>
+  </section>
+</main>
+{% endblock %}

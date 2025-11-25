@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Moda Masculina{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/geral.css') }}">
+{% endblock %}
+
+{% block content %}
+<article class="section-container">
+    <h1>Por que seu estilo te deixa invisível — e como mudar isso com streetwear, sport life e old money</h1>
+
+    <section>
+        <h2>1. Introdução — O Gancho</h2>
+        <p>Quantas vezes você já saiu de casa se sentindo invisível? Como se a sua presença não causasse impacto algum nas pessoas ou, pior, um impacto negativo. Isso acontece porque, muitas vezes, o seu estilo comunica que você é apenas mais um na multidão — ou que está fora de sintonia com o ambiente.</p>
+        <p>Copiar tendências sem critério ou vestir-se sem identidade faz com que você perca força visual. A verdade é: sua roupa e seus acessórios podem ser ferramentas de comunicação e posicionamento. O segredo está em usar as peças certas para o contexto e combinar textura, cor e caimento de forma estratégica.</p>
+    </section>
+
+    <section>
+        <h2>2. Contexto — Por que isso importa?</h2>
+        <p>Segundo a Teoria do Status Visual, a forma como nos vestimos é interpretada como sinal de competência e confiança. Um estudo publicado no Journal of Fashion Marketing and Management (2002) mostra que homens bem-vestidos são vistos como mais respeitáveis e influentes.</p>
+        <p>Estilo é comunicação não verbal. Como diz Heitor Heringer: “aparência é comunicação e estética é estratégia”. Vestir-se de forma inteligente significa entender o ambiente, o nível de formalidade e o que combina com o seu tom de pele e personalidade.</p>
+    </section>
+
+    <section>
+        <h2>3. Quebra de Expectativa — O erro comum</h2>
+        <p>O erro clássico é seguir tendências de TikTok ou Instagram sem considerar contexto, biotipo ou identidade. Muitos acabam parecendo cópias genéricas. Outro erro é focar em marcas caras e esquecer o caimento e os detalhes. Estilo não é sobre preço, é sobre inteligência visual.</p>
+    </section>
+
+    <section>
+        <h2>4. Solução — O Conteúdo Principal</h2>
+        <p>Três estéticas masculinas funcionam bem no Brasil e ajudam a construir uma imagem de valor:</p>
+        <ul>
+            {% for topico in topicos %}
+                <li>
+                    <a href="{{ topico.link }}" target="_blank">{{ topico.texto }}</a>
+                
+                    <span class="fav-icon"
+                          data-url="{{ url_for('favoritar', id_topico=topico.id) }}">
+                        {% if topico.id in favoritos_ids %}
+                            ❤️
+                        {% else %}
+                            ♡
+                        {% endif %}
+                    </span>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section>
+        <h2>5. Valorização — Toque estético e psicológico</h2>
+        <p>Estilo vai além da roupa. O diferencial está no conjunto: cabelo alinhado, barba cuidada, acessórios discretos e boa postura. Como diz o canal Manual do Homem Moderno, “visual é ferramenta de posição social, principalmente quando você ainda está construindo sua narrativa”.</p>
+    </section>
+
+    <section>
+        <h2>6. Conclusão — Chamada à Ação</h2>
+        <p>O estilo é uma ferramenta de respeito. Escolha conscientemente como quer ser percebido. A partir de hoje, separe três peças do seu guarda-roupa que mais representam quem você deseja se tornar e monte seu visual com identidade. Vista-se como um homem de valor.</p>
+    </section>
+</article>
+{% endblock %}
